@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Countdown</title>
+</head>
+<body>
+    <div class="countdown">
+
+    </div>
+    <div class="countdown2">
+
+    </div>
+</body>
+
+
+<script src="./countdown.js"></script>
+<script>
+
+    let p = document.querySelectorAll('.countdown');
+
+    let q = [
+        {
+            el: '.countdown',
+            endt: '1 Jan, 2025'
+        },
+        {
+            el: '.countdown2',
+            endt: '1 Jan, 2024'
+        }
+    ]
+
+    q.map((item) => {
+        console.log(item)
+        Countdown.init(item.el, {
+        startTime: new Date(Date.now()),
+        endTime: item?.endt,
+        untill: 'tillMonth',
+        timeLabel: {
+            month: 'Months',
+            day: 'Days',
+            hour: 'Hours',
+            minute: 'Minutes',
+            second: 'Seconds'
+        }
+    });
+    })
+    
+    
+</script>
+</html>
