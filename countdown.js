@@ -1,5 +1,5 @@
 var Countdown = (function () {
-    let targetEndDate, targetStartDate, currentDate, targetElement, tillWhen, labels = [];
+    let labels = [];
 
     function getTimeRemaining(startTime, endTime, tillWhen = 'tillDay') {
         // let startTime = Date.now();
@@ -68,8 +68,8 @@ var Countdown = (function () {
      *
      * @return {undefined} This function does not return a value.
      */
-    function updateCountdown() {
-        var time = getTimeRemaining(targetStartDate, targetEndDate, tillWhen);
+    function updateCountdown(startDate, endDate, when, targetElement) {
+        var time = getTimeRemaining(startDate, endDate, when);
         console.log('time', time)
         let countdownText = '';
         
@@ -141,21 +141,25 @@ var Countdown = (function () {
     function init(targetElementId, config) {
         console.log(targetElementId,  config)
         let { startTime, endTime, untill, timeLabel } = config;
-        tillWhen = untill;
-        targetStartDate = new Date(startTime);
-        targetEndDate = new Date(endTime);
+        let tillWhen = untill;
+        let targetStartDate = new Date(startTime);
+        let targetEndDate = new Date(endTime);
         labels = timeLabel;
-        targetElement = document.querySelector(targetElementId);
+        let targetElement = document.querySelector(targetElementId);
         if (!targetElement) {
             console.error("Target element not found.");
             return;
         }
 
-        currentDate = new Date(Date.now());
+        let currentDate = new Date(Date.now());
 
         if(currentDate >= targetStartDate && currentDate <= targetEndDate){
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
+            updateCountdown(targetStartDate,targetEndDate, tillWhen, targetElement);
+            setInterval(() => {
+                updateCountdown(targetStartDate, targetEndDate, tillWhen, targetElement);
+
+            }, 1000)
+            // setInterval(updateCountdown, 1000);
         }
         
         
